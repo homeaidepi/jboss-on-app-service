@@ -4,9 +4,27 @@ Trying out JBoss EAP in a container.
 
 ## Usage
 
-```shell
-docker pull registry.access.redhat.com/jboss-eap-7/eap72-openshift
-```
+1. Build the image.
+
+  ```shell
+  docker build . -t jboss
+  ```
+
+1. Run the image
+
+  ```shell
+  docker run --publish-all --name jboss jboss
+  ```
+
+1. Get the port mapping
+
+  ```shell
+  docker container ps
+  ```
+
+  This will show the jboss container under the `PORTS` column.
+
+1. Open a browser to `http://localhost:<port-mapped-to-8080>`.
 
 ## Notes
 
