@@ -2,7 +2,9 @@
 
 Trying out JBoss EAP in a container.
 
-## Usage
+## Local Usage
+
+### Run the container
 
 1. Build the image.
 
@@ -13,7 +15,7 @@ Trying out JBoss EAP in a container.
 1. Run the image
 
   ```shell
-  docker run --publish-all --name jboss jboss
+  docker run --name jboss --publish-all jboss
   ```
 
 1. Get the port mapping
@@ -24,7 +26,13 @@ Trying out JBoss EAP in a container.
 
   This will show the jboss container under the `PORTS` column.
 
-1. Open a browser to `http://localhost:<port-mapped-to-8080>`.
+1. Open a browser to `http://localhost:<port-mapped-to-8080>`
+
+### SSH into the container
+
+```shell
+docker exec -it <container-id> bash
+```
 
 ## Notes
 
