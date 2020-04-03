@@ -34,6 +34,27 @@ Trying out JBoss EAP in a container.
 docker exec -it <container-id> bash
 ```
 
+## Deploy an app
+
+Build the sample app using Maven.
+
+```shell
+cd sample
+mvn clean install
+```
+
+Next, deploy the WAR file using App Service's REST APIs for deployment. For WAR applications, use `/api/wardeploy/`. The username and password for the following command are from your Web App's publish profile.
+
+```shell
+curl -X Post -u <username> --data-binary @"target/applicationPetstore.war" https://<your-app-name>.scm.azurewebsites.net/api/wardeploy
+```
+
+If you are using PowerShell, there is a Azure commandlet for WAR deploy.
+
+```powershell
+Publish-AzWebapp -ResourceGroupName <group-name> -Name <app-name> -ArchivePath "sample\target\applicationPetstore.war"
+```
+
 ## Notes
 
 - Jboss EAP OpenShift container image: `jboss-eap-7/eap72-openshift`

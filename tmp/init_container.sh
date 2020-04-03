@@ -34,6 +34,6 @@ else
 fi
 # END: Deploy the apps
 
-
+$JBOSS_HOME/bin/jboss-cli.sh -c "reload"
 
 echo "... init_container.sh completed!"

@@ -8,5 +8,5 @@ ENV PORT 8080
 COPY tmp/init_container.sh      /bin/init_container.sh
 
 EXPOSE 8080 9990
-
-CMD ["sh", "/opt/eap/bin/openshift-launch.sh"]
+# /opt/eap/bin/openshift-launch.sh
+CMD ["sh", "/bin/init_container.sh"]
