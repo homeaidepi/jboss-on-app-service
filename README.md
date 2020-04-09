@@ -12,10 +12,10 @@ Trying out JBoss EAP in a container.
   docker build . -t jboss
   ```
 
-1. Run the image
+1. Run the image. This will mount a directory to the wwwroot directory, so we can deploy .WAR applications locally.
 
   ```shell
-  docker run --name jboss --publish-all jboss
+  docker run --name jboss -v ~/mounted_home:/home/ --publish-all jboss
   ```
 
 1. Get the port mapping
