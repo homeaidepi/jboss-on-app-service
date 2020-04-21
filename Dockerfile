@@ -6,7 +6,7 @@ USER root
 ENV PORT 8080
 
 COPY tmp/init_container.sh      /bin/init_container.sh
-COPY tmp/standalone-full.xml    /bin/standalone-full.xml
+COPY tmp/standalone-full.xml    /opt/eap/standalone/configuration/standalone-full.xml
 
 EXPOSE 8080 9990
 
