@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -m # Enable job control
 
-cat >/etc/motd <<EOL 
-  _____                               
-  /  _  \ __________ _________   ____  
- /  /_\  \\___   /  |  \_  __ \_/ __ \ 
-/    |    \/    /|  |  /|  | \/\  ___/ 
+cat >/etc/motd <<EOL
+  _____
+  /  _  \ __________ _________   ____
+ /  /_\  \\___   /  |  \_  __ \_/ __ \
+/    |    \/    /|  |  /|  | \/\  ___/
 \____|__  /_____ \____/ |__|    \___  >
-        \/      \/                  \/ 
+        \/      \/                  \/
 A P P   S E R V I C E   O N   L I N U X
 
 Documentation: http://aka.ms/webapp-linux
@@ -49,6 +49,7 @@ export JAVA_OPTS="$JAVA_OPTS -Djboss.http.port=$PORT"
 export JAVA_OPTS="$JAVA_OPTS -Djboss.server.log.dir=/home/LogFiles"
 export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 export JAVA_OPTS="$JAVA_OPTS -Dsun.util.logging.disableCallerCheck=true"
+export JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=org.jboss.logmanager,jdk.nashorn.api,com.sun.crypto.provider"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
 
 export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Djava.net.preferIPv4Stack=true"
@@ -69,7 +70,7 @@ echo "cd /home" >> /etc/profile
 # Start Wildfly management server in the background. This helps us to proceed with the next steps like waiting for the server to be ready to run the startup script, etc
 # Also, use the standalone-full.xml config (Java EE full-profile)
 echo ***Starting Wildfly in the background...
-$JBOSS_HOME/bin/standalone.sh --server-config=/bin/standalone-full.xml -b 0.0.0.0 --admin-only &
+$JBOSS_HOME/bin/standalone.sh --server-config=standalone-full.xml -b 0.0.0.0 --admin-only &
 
 function wait_for_server() {
   until `$JBOSS_HOME/bin/jboss-cli.sh -c ":read-attribute(name=server-state)" 2> /dev/null | grep -q running`; do
@@ -170,7 +171,7 @@ then
     echo Copying $STARTUP_FILE to $TMP_STARTUP_FILE and fixing EOL characters in $TMP_STARTUP_FILE
     cp $STARTUP_FILE $TMP_STARTUP_FILE
     dos2unix $TMP_STARTUP_FILE
-    
+
     echo Running STARTUP_FILE: $TMP_STARTUP_FILE
     source $TMP_STARTUP_FILE
     echo Finished running startup file $TMP_STARTUP_FILE
