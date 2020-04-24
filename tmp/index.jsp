@@ -4,7 +4,7 @@
         <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                    <title>Wildfly example</title>
+                    <title>JBoss on App Service POC</title>
                     <link rel="SHORTCUT ICON" href="https://c.s-microsoft.com/favicon.ico?v2" type="image/x-icon"/>
                     <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.1.1/css/bootstrap.min.css" crossorigin="anonymous">
                     <link rel="stylesheet" type="text/css" href="https://appservice.azureedge.net/css/linux-landing-page/v3/main.css">
@@ -38,7 +38,9 @@
                 <div class=" extra-pl-small-scr offset-xl-1 offset-lg-1 offset-md-2 offset-sm-2 offset-xs-4 col-xl-5 col-lg-5 col-md-10 col-sm-11 col-xs-11 div-vertical-center">
                     <div class="container-fluid">
                         <div class="row">
-                            <h4>JBoss is running.</h4><br>
+                            <h4>JBoss is running.</h4>
+                            <br>
+                            <br>
                             <p>Now it's time to deploy the sample WAR application. See the next step in the README for instructions.</p><br>
                             <b>Java Information:</b>
                         </div>
