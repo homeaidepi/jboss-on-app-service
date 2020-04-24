@@ -9,29 +9,53 @@ This repository shows how to deploy JBoss EAP onto Azure App Service. The app se
 1. Run the Azure CLI command below to create an Azure web app. This command will use `asdasdasdasd` as the container image.
 
   ```shell
-  az webapp create -n <webapp-name> -g <resource-group> -p <app-service-plan> --deployment-container-image-name "sadasdasdasdsa"
+  az webapp create -n <webapp-name> -g <resource-group> -p <app-service-plan> --deployment-container-image-name "jasonfreeberg/jboss-on-app-service"
   ```
 
 1. Once the webapp is created, run the CLI command to enable the container to use the App Service file system.
 
   ```shell
-  az webapp config appsettings set 
+  az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
   ```
 
-1. Browse to your web app at *http://your-site-name.azurewebsites.net*. You should see the default web page. In the next section, we will use App Service's REST APIs to deploy a .WAR application onto the web app.
+1. Browse to your web app at *http://webapp-name.azurewebsites.net*. You should see the default web page. You now have a custom container running JBoss deployed on App Service.  
 
-### Deploy a .WAR
+### Deploy a WAR file
+
+We will now use App Service's [REST APIs to deploy a .WAR file](https://docs.microsoft.com/azure/app-service/deploy-zip#deploy-war-file) onto the web app.
 
 ## Build the sample app
 
-## Deploy the sample app
+From the root directory of the repository, run the following commands to build the sample app. This will use Maven to create a WAR file
 
-- Need publishing credentials
-- 
+  ```dotnetcli
+  cd sample
+  mvn clean install
+  ```
 
-### Set up Application Insights
+### Deploy the sample app
+
+To deploy the WAR file, retrieve the deployment credentials for the webapp using the CLI command below.
+
+#### with cURL
+
+ToDo: get the login credentials
+
+```bash
+curl -X POST -u <username> --data-binary @"<war-file-path>" https://<app-name>.scm.azurewebsites.net/api/wardeploy
+```
+
+#### with PowerShell
+
+If have the Azure PowerShell commandlets installed and you are [logged in](https://docs.microsoft.com/powershell/azure/authenticate-azureps?view=azps-3.8.0), you can use the following command to deploy (no need to get the deployment credentials).
+
+```powershell
+Publish-AzWebapp -ResourceGroupName <group-name> -Name <app-name> -ArchivePath <war-file-path>
+```
 
 ### Web SSH
+
+### Set up Application Insights
 
 ## Local Usage
 
@@ -63,27 +87,6 @@ This repository shows how to deploy JBoss EAP onto Azure App Service. The app se
 
 ```shell
 docker exec -it <container-id> bash
-```
-
-### Deploy an app
-
-Build the sample app using Maven.
-
-```shell
-cd sample
-mvn clean install
-```
-
-Next, deploy the WAR file using App Service's REST APIs for deployment. For WAR applications, use `/api/wardeploy/`. The username and password for the following command are from your Web App's publish profile.
-
-```shell
-curl -X Post -u <username> --data-binary @"target/applicationPetstore.war" https://<your-app-name>.scm.azurewebsites.net/api/wardeploy
-```
-
-If you are using PowerShell, there is a Azure commandlet for WAR deploy.
-
-```powershell
-Publish-AzWebapp -ResourceGroupName <group-name> -Name <app-name> -ArchivePath "sample\target\applicationPetstore.war"
 ```
 
 ## Notes
