@@ -7,8 +7,8 @@ ENV PORT 8080
 
 COPY tmp/init_container.sh      /bin/init_container.sh
 COPY tmp/standalone-full.xml    /opt/eap/standalone/configuration/standalone-full.xml
+COPY tmp/index.jsp              /tmp/wildfly/webapps/ROOT/index.jsp
 
 EXPOSE 8080 9990
 
-#CMD ["sh", "/opt/eap/bin/openshift-launch.sh"]
 CMD ["sh", "/bin/init_container.sh"]
