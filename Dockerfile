@@ -10,6 +10,8 @@ COPY tmp/standalone-full.xml    /opt/eap/standalone/configuration/standalone-ful
 COPY tmp/index.jsp              /tmp/wildfly/webapps/ROOT/index.jsp
 COPY tmp/sshd_config            /etc/ssh/
 
+RUN echo "root:Docker!" | chpasswd  # set username and password for SSH
+
 EXPOSE 8080 2222
 
 CMD ["sh", "/bin/init_container.sh"]
