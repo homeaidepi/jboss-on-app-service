@@ -14,15 +14,15 @@ This repository shows how to deploy JBoss EAP onto Azure App Service. The app se
 
 1. Once the webapp is created, run the CLI command to enable the container to use the App Service file system.
 
-  ```shell
-  az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
-  ```
+    ```shell
+    az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
+    ```
 
 1. Next, register the container with your Red Hat subscription. Create two app settings, `RH_USERNAME` and `RH_PASSWORD` with your Red Hat username and password respectively.
 
-  ```shell
-  az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings RH_USERNAME=<your-username> your-username>RH_PASSWORD=<your-password>
-  ```
+    ```shell
+    az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings RH_USERNAME=<your-username> your-username>RH_PASSWORD=<your-password>
+    ```
 
 1. Browse to your web app at *http://webapp-name.azurewebsites.net*. You should see the default web page. You now have a custom container running JBoss deployed on App Service.  
 
@@ -41,7 +41,7 @@ From the root directory of the repository, run the following commands to build t
 
 ### Deploy the sample app
 
-To deploy the WAR file, retrieve the deployment credentials for the webapp using the CLI command below.
+Next, deploy the WAR file using either cURL or PowerShell. After deploying, browse to your web app to confirm the WAR file has deployed.
 
 #### with cURL
 
@@ -65,11 +65,16 @@ This container has been configured to allow easy SSH from the Kudu management si
 
 You can also connect using a client of your choice. For more information, see [this article](https://docs.microsoft.com/azure/app-service/containers/app-service-linux-ssh-support).
 
-### Set up Application Insights
+### Outsource session state to Redis
 
-### Outsource session to Redis
+- App Service does not support work-to-worker communication
+- But App Service is your scaling infrastructure, and Redis becomes your state manager
+- Cover how to configure JBoss
+  - Use startup script so the changes can be applied to new instances as they are created
 
 ### Remote EJB calls
+
+### Set up Application Insights
 
 ## Local Usage
 
@@ -78,7 +83,7 @@ You can also connect using a client of your choice. For more information, see [t
 1. Build the image.
 
   ```shell
-  
+  docker build . -t jboss
   ```
 
 1. Run the image. This will mount a directory to the wwwroot directory, so we can deploy .WAR applications locally.
