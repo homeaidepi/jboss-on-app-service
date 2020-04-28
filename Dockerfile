@@ -11,6 +11,8 @@ COPY tmp/index.jsp              /tmp/wildfly/webapps/ROOT/index.jsp
 COPY tmp/sshd_config            /etc/ssh/
 COPY tmp/ssh_keygen.sh          /tmp/ssh_keygen.sh
 
+RUN chmod 755 /tmp/ssh_keygen.sh
+
 EXPOSE 8080 2222
 
 CMD ["sh", "/bin/init_container.sh"]
