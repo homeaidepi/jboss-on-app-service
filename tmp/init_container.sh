@@ -2,30 +2,39 @@
 set -m # Enable job control
 
 cat >/etc/motd <<EOL
-  _____
-  /  _  \ __________ _________   ____
- /  /_\  \\___   /  |  \_  __ \_/ __ \
-/    |    \/    /|  |  /|  | \/\  ___/
-\____|__  /_____ \____/ |__|    \___  >
-        \/      \/                  \/
+
 A P P   S E R V I C E   O N   L I N U X
 
 Documentation: http://aka.ms/webapp-linux
 
 **NOTE**: No files or system changes outside of /home will persist beyond your application's current session. /home is your application's persistent storage and is shared across all the server instances.
 
+This is a proof-of-concept container for technical evaluation.
 
 EOL
 cat /etc/motd
 
-# echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
+echo "Registering with Red Hat subscription-manager"
+subscription-manager register --username $RH_USERNAME --password $RH_PASSWORD --auto-attach
+
+echo "installing openssh-server"
+yum install -y openssh-server
+
+echo "setting username and password for SSH"
+echo "root:Docker!" | chpasswd
+
+echo "generating SSH keys"
+/tmp/ssh_keygen.sh
 
 echo "Updating /etc/ssh/sshd_config to use PORT $SSH_PORT"
 sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
 
+echo "starting ssh daemon"
+/usr/sbin/sshd
+
 # echo Starting ssh service...
-service sshd stop
-service sshd start
+# service sshd stop
+# service sshd start
 
 if [ ! -d /home/site/wwwroot/webapps ]
 then

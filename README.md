@@ -18,6 +18,12 @@ This repository shows how to deploy JBoss EAP onto Azure App Service. The app se
   az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
   ```
 
+1. Next, register the container with your Red Hat subscription. Create two app settings, `RH_USERNAME` and `RH_PASSWORD` with your Red Hat username and password respectively.
+
+  ```shell
+  az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings RH_USERNAME=<your-username> your-username>RH_PASSWORD=<your-password>
+  ```
+
 1. Browse to your web app at *http://webapp-name.azurewebsites.net*. You should see the default web page. You now have a custom container running JBoss deployed on App Service.  
 
 ### Deploy a WAR file
@@ -55,7 +61,15 @@ Publish-AzWebapp -ResourceGroupName <group-name> -Name <app-name> -ArchivePath <
 
 ### Web SSH
 
+This container has been configured to allow easy SSH from the Kudu management site, simply open a browser to `https://<app-name>.scm.azurewebsites.net/webssh/host`.
+
+You can also connect using a client of your choice. For more information, see [this article](https://docs.microsoft.com/azure/app-service/containers/app-service-linux-ssh-support).
+
 ### Set up Application Insights
+
+### Outsource session to Redis
+
+### Remote EJB calls
 
 ## Local Usage
 
@@ -64,13 +78,13 @@ Publish-AzWebapp -ResourceGroupName <group-name> -Name <app-name> -ArchivePath <
 1. Build the image.
 
   ```shell
-  docker build . -t jboss
+  
   ```
 
 1. Run the image. This will mount a directory to the wwwroot directory, so we can deploy .WAR applications locally.
 
   ```shell
-  docker run --name jboss -v ~/mounted_home:/home/ --publish-all jboss
+  docker run --name jboss -v ~/mounted_home:/home/ -e RH_USERNAME -e RH_PASSWORD --publish-all jboss
   ```
 
 1. Get the port mapping
@@ -92,6 +106,14 @@ docker exec -it <container-id> bash
 ## Notes
 
 - "The JBoss EAP management CLI is not recommended for use with JBoss EAP running in a containerized environment. Any configuration changes made using the management CLI in a running container will be lost when the container restarts." [Source](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html-single/getting_started_with_jboss_eap_for_openshift_container_platform/index)
+
+### Development notes
+
+- Can the Red Hat subscription be registered during Docker build? I had it as part of a `RUN` command, but it seemed to have no effect. Doing it as part of the startup script negatively affects cold start time.
+
+  ```txt
+  RUN subscription-manager register --username username --password password --auto-attach \
+  ```
 
 ## Links
 
