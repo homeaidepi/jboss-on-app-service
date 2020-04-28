@@ -8,9 +8,9 @@ This repository shows how to deploy JBoss EAP onto Azure App Service. The app se
 
 1. Run the Azure CLI command below to create an Azure web app. This command will use `asdasdasdasd` as the container image.
 
-  ```shell
-  az webapp create -n <webapp-name> -g <resource-group> -p <app-service-plan> --deployment-container-image-name "jasonfreeberg/jboss-on-app-service"
-  ```
+    ```shell
+    az webapp create -n <webapp-name> -g <resource-group> -p <app-service-plan> --deployment-container-image-name "jasonfreeberg/jboss-on-app-service"
+    ```
 
 1. Once the webapp is created, run the CLI command to enable the container to use the App Service file system.
 
