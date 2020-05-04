@@ -23,6 +23,9 @@ jobs:
     - run: |
         docker build . -t jasonfreeberg/jboss:${{ github.sha }} --build-arg RH_USERNAME --build-arg RH_PASSWORD
         docker push jasonfreeberg/jboss:${{ github.sha }}
+      env:
+        RH_USERNAME: ${{ secrets.RH_USERNAME }}
+        RH_PASSWORD: ${{ secrets.RH_PASSWORD }}
 
     - uses: azure/appservice-actions/webapp-container@master
       with:
