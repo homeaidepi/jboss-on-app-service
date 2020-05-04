@@ -14,27 +14,11 @@ This is a proof-of-concept container for technical evaluation.
 EOL
 cat /etc/motd
 
-echo "Registering with Red Hat subscription-manager"
-subscription-manager register --username $RH_USERNAME --password $RH_PASSWORD --auto-attach
-
-echo "installing openssh-server"
-yum install -y openssh-server
-
-echo "setting username and password for SSH"
-echo "root:Docker!" | chpasswd
-
-echo "generating SSH keys"
-/tmp/ssh_keygen.sh
-
 echo "Updating /etc/ssh/sshd_config to use PORT $SSH_PORT"
 sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
 
 echo "starting ssh daemon"
 /usr/sbin/sshd
-
-# echo Starting ssh service...
-# service sshd stop
-# service sshd start
 
 if [ ! -d /home/site/wwwroot/webapps ]
 then
@@ -59,8 +43,9 @@ export JAVA_OPTS="$JAVA_OPTS -Djboss.http.port=$PORT"
 export JAVA_OPTS="$JAVA_OPTS -Djboss.server.log.dir=/home/LogFiles"
 export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 export JAVA_OPTS="$JAVA_OPTS -Dsun.util.logging.disableCallerCheck=true"
-export JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=org.jboss.logmanager,jdk.nashorn.api,com.sun.crypto.provider"
+export JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=org.jboss.logmanager,jdk.nashorn.api,com.sun.crypto.provider,com.microsoft.applicationinsights.agent"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
+export JAVA_OPTS="$JAVA_OPTS -javaagent:/tmp/appinsights-agent.jar"
 
 export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Djava.net.preferIPv4Stack=true"
 

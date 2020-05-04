@@ -65,18 +65,29 @@ This container has been configured to allow easy SSH from the Kudu management si
 
 You can also connect using a client of your choice. For more information, see [this article](https://docs.microsoft.com/azure/app-service/containers/app-service-linux-ssh-support).
 
-### Outsource session state to Redis
+### Configuring JBoss
 
-- App Service does not support work-to-worker communication
-- But App Service is your scaling infrastructure, and Redis becomes your state manager
-- Cover how to configure JBoss
-  - Use startup script so the changes can be applied to new instances as they are created
+In App Service, each app instance is stateless. This means each instance must be configured at startup. Any changes applied to the container as it is running would be lost if the instance moves or restarts. App Service allows you to specify a [startup script]() to be called as the container starts. This is where JBoss CLI commands can be executed to configure the container.
+
+#### Outsource application state
+
+JBoss applications are sometimes run in a clustered configuration (also known as domain mode). However, App Service does not support direct communication between application instances so JBoss apps can only be run in standalone mode on App Service. If you do wish to run a stateful JBoss EAP application on the platform, the state must be stored remotely in Red Hat Data Grid. JBoss 7 supports  For more information, please see [this section of the JBoss 7 docs](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/configuring_high_availability#cache_containers).
+
+> If you are migrating an existing JBoss application that runs in domain mode, see [JBoss on Azure Virtual Machines](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.1/html-single/using_jboss_eap_in_microsoft_azure/index).
 
 ### Remote EJB calls
 
+
+
 ### Set up Application Insights
 
+1. Create a new App Setting, `APPINSIGHTS_INSTRUMENTATIONKEY`, with your Application Insights key from the Azure Portal.
+
+1. 
+
 ## Local Usage
+
+The following instructions are for using the Docker image locally. These steps are not required to run the image on App Service.
 
 ### Run the container
 
@@ -117,7 +128,7 @@ docker exec -it <container-id> bash
 - Can the Red Hat subscription be registered during Docker build? I had it as part of a `RUN` command, but it seemed to have no effect. Doing it as part of the startup script negatively affects cold start time.
 
   ```txt
-  RUN subscription-manager register --username username --password password --auto-attach \
+  RUN subscription-manager register --username username --password password --auto-attach
   ```
 
 ## Links

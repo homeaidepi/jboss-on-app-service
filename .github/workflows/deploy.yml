@@ -1,3 +1,5 @@
+name: 'Build and deploy container for testing'
+
 on: 
   push:
     branches:
@@ -19,7 +21,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - run: |
-        docker build . -t jasonfreeberg/jboss:${{ github.sha }}
+        docker build . -t jasonfreeberg/jboss:${{ github.sha }} --build-arg RH_USERNAME --build-arg RH_PASSWORD
         docker push jasonfreeberg/jboss:${{ github.sha }}
 
     - uses: azure/appservice-actions/webapp-container@master
