@@ -69,15 +69,11 @@ JBoss applications are sometimes run in a clustered configuration (also known as
 
 > If you are migrating an existing JBoss application that runs in domain mode, see [JBoss on Azure Virtual Machines](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.1/html-single/using_jboss_eap_in_microsoft_azure/index).
 
-### Remote EJB calls
-
-
-
 ### Set up Application Insights
 
-1. Create a new App Setting, `APPINSIGHTS_INSTRUMENTATIONKEY`, with your Application Insights key from the Azure Portal.
+1. [Create an Application Insights resource](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource) using the Azure Portal.
 
-1. 
+1. Create a new App Setting, `APPINSIGHTS_INSTRUMENTATIONKEY`, and set the value to your AI Instrumentation key from the Application Insights blade.
 
 ## Local Usage
 
