@@ -18,12 +18,6 @@ This repository shows how to deploy JBoss EAP onto Azure App Service. The app se
     az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
     ```
 
-1. Next, register the container with your Red Hat subscription. Create two app settings, `RH_USERNAME` and `RH_PASSWORD` with your Red Hat username and password respectively.
-
-    ```shell
-    az webapp config appsettings set --resource-group <resource-group> --name <webapp-name> --settings RH_USERNAME=<your-username> your-username>RH_PASSWORD=<your-password>
-    ```
-
 1. Browse to your web app at *http://webapp-name.azurewebsites.net*. You should see the default web page. You now have a custom container running JBoss deployed on App Service.  
 
 ### Deploy a WAR file
