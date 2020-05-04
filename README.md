@@ -73,7 +73,7 @@ JBoss applications are sometimes run in a clustered configuration (also known as
 
 1. [Create an Application Insights resource](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource) using the Azure Portal.
 
-1. Create a new App Setting, `APPINSIGHTS_INSTRUMENTATIONKEY`, and set the value to your AI Instrumentation key from the Application Insights blade.
+1. Create a new app setting, `APPINSIGHTS_INSTRUMENTATIONKEY`, and set the value to your AI Instrumentation key from the Application Insights blade.
 
 ## Local Usage
 
