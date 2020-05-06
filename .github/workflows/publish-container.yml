@@ -17,8 +17,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - run: |
-        docker build . -t jasonfreeberg/jboss-on-app-service:${ GITHUB_REF } --build-arg RH_USERNAME --build-arg RH_PASSWORD
-        docker push jasonfreeberg/jboss-on-app-service:${ GITHUB_REF }
+        docker build . -t jasonfreeberg/jboss-on-app-service:${GITHUB_REF##*/} --build-arg RH_USERNAME --build-arg RH_PASSWORD
+        docker push jasonfreeberg/jboss-on-app-service:${GITHUB_REF##*/}
       env:
         RH_USERNAME: ${{ secrets.RH_USERNAME }}
         RH_PASSWORD: ${{ secrets.RH_PASSWORD }}
