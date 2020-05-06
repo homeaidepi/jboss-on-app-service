@@ -2,6 +2,21 @@
 
 This tutorial shows how to deploy JBoss EAP onto Azure App Service. The JBoss app server is deployed as a custom container.
 
+-------
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Tutorial](#tutorial)
+  - [Create the App Service Plan and resource group](#create-the-app-service-plan-and-resource-group)
+  - [Create and configure the web app](#create-and-configure-the-web-app)
+  - [Deploy a WAR file](#deploy-a-WAR-file)
+  - [SSH into the web app](#SSH-into-the-web-app)
+  - [Configure JBoss](#Configure-JBoss)
+  - [Monitor with Application Insights](#Monitor-with-Application-Insights)
+- [Local Usage](#Local-Usage)
+- [Related Materials](#Related-Materials)
+
 ## Prerequisites
 
 To complete this tutorial, you will need the following tools installed on your machine.
@@ -9,7 +24,7 @@ To complete this tutorial, you will need the following tools installed on your m
 - The Azure CLI
 - Maven
 - Docker (optional)
-- An FTP client such as FileZilla
+- An FTP client, such as FileZilla
 
 You will also need an active Azure Subscription.
 
@@ -61,7 +76,7 @@ From the root directory of the repository, run the following commands to build t
 
 Next, deploy the WAR file using either cURL or PowerShell. After deploying, browse to your web app to confirm the WAR file has deployed.
 
-#### with cURL
+##### with cURL
 
 1. To deploy with cURL, you will need the deployment username and password. Run the command below. In the command output, your username and password are in the first JSON.
 
@@ -75,7 +90,7 @@ Next, deploy the WAR file using either cURL or PowerShell. After deploying, brow
     curl -X POST -u <username> --data-binary @"<war-file-path>" https://<app-name>.scm.azurewebsites.net/api/wardeploy
     ```
 
-#### with PowerShell
+##### with PowerShell
 
 If have the Azure PowerShell commandlets installed and you are [logged in](https://docs.microsoft.com/powershell/azure/authenticate-azureps?view=azps-3.8.0), you can use the following command to deploy (no need to get the deployment credentials).
 
@@ -107,7 +122,7 @@ Once the driver and shell script are uploaded, run the following Azure CLI comma
 az webapp config set --startup-file "/home/site/deployments/tools/startup_script.sh" --name <webapp-name> --resource-group <group-name>
 ```
 
-### Set up Application Insights
+### Monitor with Application Insights
 
 The container is configured with Application Insights. To view the telemetry, simply create an Application Insights resource and provide your instrumentation key as an environment variable.
 
@@ -161,12 +176,7 @@ The following instructions are for using the Docker image locally. These steps a
 docker exec -it jboss bash
 ```
 
-## Notes
+## Related Materials
 
 - "The JBoss EAP management CLI is not recommended for use with JBoss EAP running in a containerized environment. Any configuration changes made using the management CLI in a running container will be lost when the container restarts." [Source](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html-single/getting_started_with_jboss_eap_for_openshift_container_platform/index)
-
-
-## Links
-
-- [JBoss EAP 7.2 for OpenShift Container Image](https://access.redhat.com/containers/?extIdCarryOver=true&sc_cid=701f2000001Css5AAC&tab=images&get-method=unauthenticated#/registry.access.redhat.com/jboss-eap-7/eap72-openshift)
- 
+- The container image used in this tutorial is based on the [JBoss EAP 7.2 for OpenShift Container Image](https://access.redhat.com/containers/?extIdCarryOver=true&sc_cid=701f2000001Css5AAC&tab=images&get-method=unauthenticated#/registry.access.redhat.com/jboss-eap-7/eap72-openshift)
