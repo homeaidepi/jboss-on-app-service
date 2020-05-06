@@ -28,6 +28,9 @@ RUN sh /tmp/ssh_keygen.sh
 # Install App Insights
 RUN wget -O /tmp/appinsights-agent.jar https://github.com/microsoft/ApplicationInsights-Java/releases/download/2.6.0/applicationinsights-agent-2.6.0.jar
 
+# Make directory for deployment tools
+RUN mkdir -p /home/site/deployments/tools
+
 EXPOSE 8080 2222
 
 CMD ["sh", "/bin/init_container.sh"]
