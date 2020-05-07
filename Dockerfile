@@ -25,8 +25,9 @@ RUN chmod 755 /tmp/ssh_keygen.sh
 RUN echo "root:Docker!" | chpasswd
 RUN sh /tmp/ssh_keygen.sh
 
-# Install App Insights
+# Download AI agent, copy the config file
 RUN wget -O /tmp/appinsights-agent.jar https://github.com/microsoft/ApplicationInsights-Java/releases/download/2.6.0/applicationinsights-agent-2.6.0.jar
+COPY tmp/AI-Agent.xml           /tmp/AI-Agent.xml
 
 # Make directory for deployment tools
 RUN mkdir -p /home/site/deployments/tools
