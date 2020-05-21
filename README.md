@@ -2,6 +2,8 @@
 
 This tutorial shows how to deploy JBoss EAP onto Azure App Service. The JBoss app server is deployed as a custom container. This is a technical proof-of-concept to provide feedback for the product roadmap. This container should not be used to host production workloads.
 
+> If you run into any problems, please file an issue directly on this repo. Send any feedback or suggestions to java-on-app-service@microsoft.com
+
 -------
 
 ## Table of Contents
