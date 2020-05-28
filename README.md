@@ -36,7 +36,7 @@ If you do not already have an App Service Plan and resource group created, run t
 
 ```shell
 az group create --name <resource-group> --location eastus2
-az app service plan create --name <plan-name> --resource-group <resource-group> --sku P1V2 --is-linux
+az appservice plan create --name <plan-name> --resource-group <resource-group> --sku P1V2 --is-linux
 ```
 
 If you would like to use a different region, run the command `az account list-locations` to see a list of locations.
