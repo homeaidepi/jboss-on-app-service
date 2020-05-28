@@ -48,8 +48,10 @@ Now that the App Service Plan is created, we will create a Linux web app on the 
 1. Run the Azure CLI command below to create an Azure web app. This command will use `jasonfreeberg/jboss-on-app-service` as the container image.
 
     ```shell
-    az webapp create -n <webapp-name> -g <resource-group> -p <app-service-plan-name> --deployment-container-image-name "jasonfreeberg/jboss-on-app-service"
+    az webapp create -n <webapp-name> -g <resource-group> -p <app-service-plan-name> --deployment-container-image-name "jasonfreeberg/jboss-on-app-service:v1"
     ```
+
+    It can take up to 3.5 minutes for the system to pull the image the first time. Subsequent pulls are faster.
 
 1. Once the webapp is created, run this CLI command to allow the container to use the App Service file system.
 
