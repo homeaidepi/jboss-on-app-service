@@ -2,6 +2,7 @@ FROM registry.access.redhat.com/jboss-eap-7/eap72-openshift
 
 USER root
 
+# These args are used during build to register with Red Hat
 ARG RH_USERNAME
 ARG RH_PASSWORD
 
