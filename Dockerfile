@@ -2,10 +2,6 @@ FROM registry.access.redhat.com/jboss-eap-7/eap72-openshift
 
 USER root
 
-# These args are used during build to register with Red Hat
-ARG RH_USERNAME
-ARG RH_PASSWORD
-
 ENV PORT 8080
 ENV SSH_PORT 2222
 
@@ -17,10 +13,8 @@ COPY tmp/ssh_keygen.sh          /tmp/ssh_keygen.sh
 COPY tmp/centos_7.repo          /etc/yum.repos.d/centos_7.repo
 
 # Register with Red Hat, install utilities, unregister
-# RUN subscription-manager register --username $RH_USERNAME --password $RH_PASSWORD --auto-attach
 RUN yum install -y openssh-server
 RUN yum install -y wget
-# RUN subscription-manager unregister
 
 # Set up SSH keys
 RUN chmod 755 /tmp/ssh_keygen.sh
