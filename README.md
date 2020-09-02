@@ -8,16 +8,26 @@ This tutorial shows how to deploy JBoss EAP onto Azure App Service. The JBoss ap
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Tutorial](#tutorial)
-  - [Create the App Service Plan and resource group](#create-the-app-service-plan-and-resource-group)
-  - [Create and configure the web app](#create-and-configure-the-web-app)
-  - [Deploy a WAR file](#deploy-a-WAR-file)
-  - [SSH into the web app](#SSH-into-the-web-app)
-  - [Configure JBoss](#Configure-JBoss)
-  - [Monitor with Application Insights](#Monitor-with-Application-Insights)
-- [Local Usage](#Local-Usage)
-- [Related Materials](#Related-Materials)
+- [JBoss EAP on App Service](#jboss-eap-on-app-service)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Tutorial](#tutorial)
+    - [Create the App Service Plan and resource group](#create-the-app-service-plan-and-resource-group)
+    - [Create and configure the web app](#create-and-configure-the-web-app)
+    - [Deploy a WAR file](#deploy-a-war-file)
+      - [Build the sample app](#build-the-sample-app)
+      - [Deploy the sample app](#deploy-the-sample-app)
+        - [with cURL](#with-curl)
+        - [with PowerShell](#with-powershell)
+    - [SSH into the web app](#ssh-into-the-web-app)
+    - [Configure JBoss](#configure-jboss)
+      - [Configure a database](#configure-a-database)
+    - [Monitor with Application Insights](#monitor-with-application-insights)
+      - [Outsource application state](#outsource-application-state)
+  - [Local Usage](#local-usage)
+    - [Build and run the container](#build-and-run-the-container)
+    - [SSH into the container](#ssh-into-the-container)
+  - [Related Materials](#related-materials)
 
 ## Prerequisites
 
@@ -161,7 +171,7 @@ The following instructions are for using the Docker image locally. These steps a
 1. Run the image. This will mount a directory to the wwwroot directory, so we can deploy WAR applications locally.
 
   ```shell
-  docker run --name jboss -v ~/mounted_home:/home/ --publish-all jboss
+  docker run --name jboss --env APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=1e5607a2-dbac-4527-887a-102cbe2bdefa -v ~/mounted_home:/home/ --publish-all jboss
   ```
 
 1. Get the port mapping

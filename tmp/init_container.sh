@@ -45,7 +45,7 @@ export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.jboss.logmanager.Lo
 export JAVA_OPTS="$JAVA_OPTS -Dsun.util.logging.disableCallerCheck=true"
 export JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=org.jboss.logmanager,jdk.nashorn.api,com.sun.crypto.provider,com.microsoft.applicationinsights.agent"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
-export JAVA_OPTS="$JAVA_OPTS -javaagent:/tmp/appinsights-agent.jar"
+export JAVA_OPTS="$JAVA_OPTS -javaagent:/tmp/applicationinsights-agent-3.0.0-PREVIEW.5.jar"
 
 export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Djava.net.preferIPv4Stack=true"
 

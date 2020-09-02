@@ -1,0 +1,5 @@
+[mirror.centos.org_centos_7_os_x86_64_]
+name=centos_7_repo
+baseurl=http://mirror.centos.org/centos/7/os/x86_64/
+enabled=1
+gpgkey=http://mirror.centos.org/centos/7/os/x86_64/RPM-GPG-KEY-CentOS-7
