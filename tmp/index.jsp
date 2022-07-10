@@ -38,10 +38,13 @@
                 <div class=" extra-pl-small-scr offset-xl-1 offset-lg-1 offset-md-2 offset-sm-2 offset-xs-4 col-xl-5 col-lg-5 col-md-10 col-sm-11 col-xs-11 div-vertical-center">
                     <div class="container-fluid">
                         <div class="row">
-                            <h4>JBoss is running.</h4>
+                            <h4>Hey Ferg, JBoss server is running in Azure.</h4>
                             <br>
                             <br>
-                            <p>Now it's time to deploy the sample WAR application. See the next step in the README for instructions.</p><br>
+                            <p>Were almost there, so lets deploy a Java WAR application to JBoss.</p><br>
+                            <p>Refer to next step in the README for how to.</p>
+                            <br>
+                            <br>
                             <b>Java Information:</b>
                         </div>
                         <div class="row">

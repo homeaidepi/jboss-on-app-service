@@ -14,7 +14,11 @@ COPY tmp/centos_7.repo          /etc/yum.repos.d/centos_7.repo
 
 # Register with Red Hat, install utilities, unregister
 RUN yum install -y openssh-server
+RUN yum install -y dos2unix
 RUN yum install -y wget
+
+RUN dos2unix /tmp/ssh_keygen.sh
+RUN dos2unix /bin/init_container.sh
 
 # Set up SSH keys
 RUN chmod 755 /tmp/ssh_keygen.sh
@@ -22,7 +26,7 @@ RUN echo "root:Docker!" | chpasswd
 RUN sh /tmp/ssh_keygen.sh
 
 # Download AI agent, copy the config file
-RUN wget -O /tmp/applicationinsights-agent-3.0.0-PREVIEW.5.jar https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.0.0-PREVIEW.5/applicationinsights-agent-3.0.0-PREVIEW.5.jar
+RUN wget -O /tmp/applicationinsights-agent-latest.jar https://repo1.maven.org/maven2/com/microsoft/azure/applicationinsights-agent/3.1.1/applicationinsights-agent-3.1.1.jar
 # COPY tmp/AI-Agent.xml           /tmp/AI-Agent.xml
 
 # Make directory for deployment tools
