@@ -24,8 +24,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASS }}
 
     - run: |
-        docker build -t ${{ secrets.DOCKER_REPO }}:${{ github.sha }} .
-        docker push ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+        docker build -t ${{ secrets.DOCKER_REPO }}:latest .
+        docker push ${{ secrets.DOCKER_REPO }}:latest
 
   deploy:
     runs-on: ubuntu-latest
