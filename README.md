@@ -79,10 +79,10 @@ We will now use App Service's [REST APIs to deploy a .WAR file](https://docs.mic
 
 #### Build the sample app
 
-From the root directory of the repository, run the following commands to build the sample app. This will use Maven to create a WAR file under `sample/target/app.war`.
+From the root directory of the repository, run the following commands to build the sample app. This will use Maven to create a WAR file under `src/target/app.war`.
 
   ```shell
-  cd sample
+  cd src
   mvn clean install
   ```
 
