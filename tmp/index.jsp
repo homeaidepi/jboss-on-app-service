@@ -41,10 +41,10 @@
                             <h4>Hey Ferg, JBoss server is running in Azure.</h4>
                             <br>
                             <br>
-                            <p>Were almost there, so lets deploy a Java WAR application to JBoss.</p><br>
+                            <p>Were almost there, so lets deploy a Java EE WAR application to JBoss.</p><br>
                             <p>Refer to next step in the README for how to.</p>
-                            <br>
-                            <br>
+                            <br/>
+                            <br/>
                             <b>Java Information:</b>
                         </div>
                         <div class="row">
