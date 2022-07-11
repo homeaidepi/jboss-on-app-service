@@ -1,30 +1,52 @@
 name: 'Build and deploy container for testing'
 
-on: 
+on:
   push:
-    branches:
-      - master
+    branches: [ master ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]
+  schedule:
+    - cron: '0 8 * * *'
 
 jobs:
   deploy-container:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-
-    - uses: azure/actions/login@master
-      with:
-        creds: ${{ secrets.AZURE_SP }}
+    # Checkout the Repo
+    - uses: actions/checkout@v3
 
     - uses: azure/container-actions/docker-login@master
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASS }}
 
     - run: |
-        docker build . -t jasonfreeberg/jboss:${{ github.sha }} --build-arg RH_USERNAME=${{ secrets.RH_USERNAME }} --build-arg RH_PASSWORD=${{ secrets.RH_PASSWORD }}
-        docker push jasonfreeberg/jboss:${{ github.sha }}
+        docker build -t ${{ secrets.DOCKER_REPO }}:${{ github.sha }} .
+        docker push ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
 
-    - uses: azure/appservice-actions/webapp-container@master
+    # Login to Azure with CLI with Federated with Github
+    - name: 'Az CLI Login via OIDC'
+      uses: azure/login@v1.4.0
       with:
-        app-name: 'freeberg-jboss'
-        images: 'jasonfreeberg/jboss:${{ github.sha }}'
+        client-id: ${{ secrets.AZURE_AD_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'JavaEEOnJBossOn'
+        images: ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+
+  chatops:
+      name: Send notifications with Teams
+      needs: [deploy-container]
+      runs-on: ubuntu-latest
+      environment: ${{ inputs.ENVIRONMENT }}
+      steps:
+            # Send Chat Ops notification
+        - name: Send chat ops notification to teams
+          uses: dhollerbach/actions.send-message-to-ms-teams@1.0.10
+          with:
+            webhook: ${{ secrets.TEAMS_WEBHOOK }}
+            message: 'Deployment Completed for commit: ${{ github.sha }} check logs to determine success.'
